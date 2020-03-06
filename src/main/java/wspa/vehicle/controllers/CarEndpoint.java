@@ -1,0 +1,56 @@
+package wspa.vehicle.controllers;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import wspa.vehicle.exceptions.EmptyFieldsException;
+import wspa.vehicle.model.dto.CarDto;
+import wspa.vehicle.services.CarService;
+
+import javax.validation.Valid;
+import java.net.URI;
+import java.util.List;
+
+
+@RestController
+@RequestMapping("api/users/{id}/cars")
+public class CarEndpoint {
+    private CarService carService;
+
+    public CarEndpoint(CarService carService) {
+        this.carService = carService;
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CarDto> getById(@PathVariable Long id)
+    {
+        return carService.findById(id).map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("")
+    public List<CarDto> getUsersCars(@PathVariable Long id)
+    {
+        return carService.getUsersCars(id);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<CarDto> saveCar (@Valid @RequestBody CarDto car, BindingResult result)
+    {
+        if (car.getId() != null )
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Zapisywany obiekt nie może mieć ustawionego Id");
+        if (result.hasErrors())
+            throw new EmptyFieldsException();
+        CarDto savedCar = carService.saveCar(car);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}/")
+                .buildAndExpand(savedCar.getId())
+                .toUri();
+        return ResponseEntity.created(location).body(savedCar);
+    }
+
+}
