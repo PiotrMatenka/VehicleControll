@@ -30,7 +30,8 @@ public class UserMapper {
         dto.setFirstName(user.getFirstName());
         dto.setLastName(user.getLastName());
         dto.setEmail(user.getEmail());
-        dto.setPassword(user.getPassword());
+        String passwordHash = passwordEncoder.encode(user.getPassword());
+        dto.setPassword(passwordHash);
         dto.setRoles(user.getRoles());
         return dto;
     }

@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -20,15 +21,15 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty
+    @NotNull(message = "Pole nie może być puste")
     private String firstName;
-    @NotEmpty
+    @NotNull(message = "Pole nie może być puste")
     private String lastName;
     @Column(unique = true)
-    @Email
-    @NotEmpty
+    @Email(message = "Nosz kurwa zły email")
+    @NotNull(message = "Pole nie może być puste")
     private String email;
-    @NotEmpty
+    @NotNull(message = "Pole nie może być puste")
     private String password;
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Car> cars = new ArrayList<>();

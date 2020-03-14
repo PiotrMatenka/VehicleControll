@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="row">
+        <div class="mx-auto col-10 col-md-6">
+            <div ng-show="!authenticated">
+                <h1>Logowanie: </h1>
+                <form>
+                    <div class="form-group">
+                        <p>Login/email: </p>
+                        <input type="email" ng-model="ctrl.credentials.email" placeholder="email">
+                    </div>
+                    <div class="form-group">
+                        <p>Hasło: </p>
+                        <input type="password" placeholder="hasło" ng-model="ctrl.credentials.password">
+                    </div>
+                    <div class="form-group">
+                        <button ng-click="ctrl.login()" type="submit" class="btn btn-primary" >Zaloguj</button>
+                        <br>
+                        <h2>Nie masz konta?</h2>
+                        <a href="#!user-add">Zarejestruj się</a>
+                    </div>
+                </form>
+            </div>
+            <div class="form-group">
+                <div ng-show="authenticated">
+                    <h2> Czy na pewno chcesz się wylogować?</h2>
+                    <a href=""ng-click="ctrl.logout()" class="btn btn-primary">Wyloguj</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

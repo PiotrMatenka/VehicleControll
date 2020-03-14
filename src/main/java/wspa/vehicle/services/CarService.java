@@ -44,14 +44,7 @@ public class CarService {
         return carMapper.carDto(savedCar);
     }
 
-    public List<CarDto> getUsersCars (Long id )
-    {
-       Optional<User>user = userRepository.findById(id);
-       if (user == null)
-           throw new UserNotFoundException();
-       else
-           return carRepository.findAllByUser_Id(id).stream().map(carMapper::carDto).collect(Collectors.toList());
-    }
+
 
     public Optional<CarDto> findById(Long id)
     {

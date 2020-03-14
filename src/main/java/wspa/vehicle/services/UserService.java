@@ -1,13 +1,19 @@
 package wspa.vehicle.services;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import wspa.vehicle.exceptions.DuplicateEmailException;
+import wspa.vehicle.exceptions.EmptyFieldsException;
+import wspa.vehicle.exceptions.InvalidEmailException;
 import wspa.vehicle.exceptions.UserNotFoundException;
 import wspa.vehicle.model.User;
+import wspa.vehicle.model.dto.CarDto;
 import wspa.vehicle.model.dto.UserDto;
 import wspa.vehicle.model.dto.UserOrderDto;
+import wspa.vehicle.model.mappers.CarMapper;
 import wspa.vehicle.model.mappers.UserMapper;
 import wspa.vehicle.model.mappers.UserOrderMapper;
+import wspa.vehicle.repositories.CarRepository;
 import wspa.vehicle.repositories.UserRepository;
 
 import java.util.List;
@@ -18,11 +24,15 @@ import java.util.stream.Collectors;
 public class UserService {
     private UserRepository userRepository;
     private UserMapper userMapper;
+    private CarRepository carRepository;
+    private CarMapper carMapper;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper)
+    public UserService(UserRepository userRepository, UserMapper userMapper, CarRepository carRepository, CarMapper carMapper)
     {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.carRepository = carRepository;
+        this.carMapper = carMapper;
     }
 
     public List<UserDto> findAll()
@@ -44,11 +54,6 @@ public class UserService {
     {
         return userRepository.findById(id).map(userMapper::userDto);
     }
-    public UserDto findByEmail(String email)
-    {
-        User user = userRepository.findByEmail(email);
-        return userMapper.userDto(user);
-    }
 
     public List<UserOrderDto> getUserOrders(Long userId)
     {
@@ -65,6 +70,15 @@ public class UserService {
         User savedUser = userRepository.save(userEntity);
         return userMapper.userDto(savedUser);
     }
+    public List<CarDto> getCars (Long id )
+    {
+        Optional<User>user = userRepository.findById(id);
+        if (user == null)
+            throw new UserNotFoundException();
+        else
+            return carRepository.findAllByUser_Id(id).stream().map(carMapper::carDto).collect(Collectors.toList());
+    }
+
 
 
 

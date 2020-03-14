@@ -20,15 +20,15 @@ import java.util.Set;
 
 @Component
 public class CustomUserDetails implements UserDetailsService {
-    private UserService userService;
+    private UserRepository userRepository;
     @Autowired
-    public void setUserRepository(UserService userService) {
-        this.userService = userService;
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        UserDto user = userService.findByEmail(email);
+        User user = userRepository.findByEmail(email);
         if (user == null)
             throw new UsernameNotFoundException("User not found");
         org.springframework.security.core.userdetails.User userDetails;

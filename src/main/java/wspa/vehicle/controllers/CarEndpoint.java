@@ -32,11 +32,6 @@ public class CarEndpoint {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("")
-    public List<CarDto> getUsersCars(@PathVariable Long id)
-    {
-        return carService.getUsersCars(id);
-    }
 
     @PostMapping("/add")
     public ResponseEntity<CarDto> saveCar (@Valid @RequestBody CarDto car, BindingResult result)

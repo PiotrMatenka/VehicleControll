@@ -1,0 +1,14 @@
+.jumbo-custom{
+    background: url('../img/hondaBaner.jpg') center;
+    width: 1024px;
+    height: 283px;
+}
+.form-error input.ng-invalid {
+    border-color:red;
+}
+.error-messages {
+    color:red;
+}
+.flex-container{
+    display: flex;
+}
