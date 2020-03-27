@@ -1,5 +1,5 @@
 insert into user(id, first_name, last_name, email, password) values
-(1, 'Andżej', 'Andżejewski', 'andzej@wp.pl', 'chuj1234'),
+(1, 'Andżej', 'Andżejewski', 'andzej@wp.pl', 'chuj' ),
 (2, 'Justynka','Kamka',  'justynka@wp.pl', 'costam1234'),
 (3, 'Piotron', 'Mateńka', 'piotron2000@wp.pl', 'niewiem1234');
 

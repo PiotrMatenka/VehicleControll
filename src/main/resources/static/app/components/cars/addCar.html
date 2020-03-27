@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="row">
+        <div class="mx-auto">
+            <h2 ng-if="ctrl.car.id">Edycja zasobu</h2>
+            <h2 ng-if="!ctrl.car.id">Nowy zasób</h2>
+        </div>
+    </div>
+    <div class="row" ng-if="ctrl.msg">
+        <div class="mx-auto">
+            <p class="text-danger">{{ctrl.msg}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <form class="mx-auto col-10 col-md-6">
+            <p ng-if="ctrl.car.id">Id: {{ctrl.car.id}}</p>
+            <div class="form-group">
+                <label for="carProducerInput">Producent:</label>
+                <input type="text" class="form-control" id="carProducerInput" placeholder="producent" ng-model="ctrl.car.producer">
+            </div>
+            <div class="form-group">
+                <label for="modelInput">Model:</label>
+                <input type="text" class="form-control" id="modelInput" placeholder="model" ng-model="ctrl.car.model">
+            </div>
+            <div class="form-group">
+                <label for="yearInput">Rocznik:</label>
+                <input type="number" class="form-control" id="yearInput" placeholder="rok produkcji" ng-model="ctrl.car.yearOfProduction">
+            </div>
+            <div class="form-group">
+                <label for="vinInput">Nr Vin:</label>
+                <input type="text" class="form-control" id="vinInput" placeholder="nr nadwozia" ng-model="ctrl.car.vin">
+            </div>
+            <div class="form-group">
+                <label for="registrationInput">Nr rejestracyjny:</label>
+                <input type="text" class="form-control" id="registrationInput" placeholder="rejestracja" ng-model="ctrl.car.registration">
+            </div>
+            <div class="form-group mb-3">
+                <button type="submit" class="btn btn-primary" ng-show="!ctrl.car.id"  ng-click="ctrl.saveCar()">Dodaj</button>
+                <button type="submit" class="btn btn-primary" ng-show="ctrl.car.id"  ng-click="ctrl.updateCar()">Zapisz</button>
+                <button type="submit" class="btn btn-primary" >
+                    <a ng-href="#!asset-history/{{ctrl.car.id}}" class="text-white">
+                        Historia napraw
+                    </a>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -13,5 +13,4 @@ public interface CarRepository extends JpaRepository<Car, Long> {
 
     List<Car> findAllByUser_Id(Long id);
     Optional<Car> findByUser_Id(Long id);
-
 }

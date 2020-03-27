@@ -4,4 +4,5 @@ angular.module('app')
     const userId = $routeParams.userId;
     vm.user = UserService.get(userId);
     vm.cars = UserService.getCars(userId);
+
 });

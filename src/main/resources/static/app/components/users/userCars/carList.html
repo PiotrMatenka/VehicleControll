@@ -32,12 +32,19 @@
                     <td>{{car.yearOfProduction}}</td>
                     <td>{{car.vin}}</td>
                     <td>{{car.registration}}</td>
-
+                    <td> <button class="btn btn-sm btn-primary" title="Edytuj">
+                        <a ng-href="#!car-add/{{car.id}}" class="text-white">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    </button></td>
                 </tr>
                 </tbody>
             </table>
             <div class="text-center" ng-if="!ctrl.cars.length">
-                <h1>Brak wypożyczeń</h1>
+                <h1>Brak samochodów</h1>
+            </div>
+            <div class="row">
+                <a ng-href="#!car-add" class="btn btn-primary mb-3">Dodaj samochód</a>
             </div>
         </div>
     </div>

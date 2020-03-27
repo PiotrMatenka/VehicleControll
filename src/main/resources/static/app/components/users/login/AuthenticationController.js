@@ -1,5 +1,5 @@
 angular.module('app')
-    .controller('AuthenticationController', function($rootScope, $location, AuthenticationService) {
+    .controller('AuthenticationController', function($rootScope, $location, AuthenticationService, $window) {
         var vm = this;
         vm.credentials = {};
         var loginSuccess = function() {
@@ -9,7 +9,7 @@ angular.module('app')
         vm.login = function() {
             AuthenticationService.authenticate(vm.credentials, loginSuccess);
         }
-        var logoutSuccess = function() {
+        var logoutSuccess = function(response) {
             $rootScope.authenticated = false;
             $location.path('/');
         }

@@ -21,7 +21,6 @@ public class UserMapper {
     public UserMapper( UserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder) {
         this.userRoleRepository = userRoleRepository;
         this.passwordEncoder = passwordEncoder;
-
     }
 
     public UserDto userDto(User user) {

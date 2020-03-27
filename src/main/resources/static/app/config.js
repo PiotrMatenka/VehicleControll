@@ -11,20 +11,32 @@ angular.module('app')
                 controller: 'UserEditController',
                 controllerAs: 'ctrl'
             })
-            .when('/user-login',{
-                templateUrl:'app/components/users/login/login.html',
-                controller: 'AuthenticationController',
-                controllerAs: 'ctrl'
-            })
+
             .when('/user-cars/:userId', {
                 templateUrl: 'app/components/users/userCars/carList.html',
                 controller: 'CarListController',
                 controllerAs: 'ctrl'
             })
-            .otherwise({
-                redirectTo: '/',
+            .when('/user-login',{
+                templateUrl: 'app/components/users/login/login.html',
+                controller: 'AuthenticationController',
+                controllerAs: 'ctrl'
+            })
+            .when ('/home', {
+                templateUrl: 'app/components/home/home.html',
                 controller: 'HomeController',
                 controllerAs: 'ctrl'
+            })
+            .when('/car-add', {
+                templateUrl: 'app/components/cars/addCar.html',
+                controller: 'CarController',
+                controllerAs: 'ctrl'
+            })
+            .otherwise({
+                redirectTo: '/',
             });
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-});
+
+    }
+    );
+

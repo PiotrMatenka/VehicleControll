@@ -1,5 +1,6 @@
 package wspa.vehicle.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -17,10 +18,10 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("api/users/{id}/cars")
+@RequestMapping("api/cars")
 public class CarEndpoint {
     private CarService carService;
-
+    @Autowired
     public CarEndpoint(CarService carService) {
         this.carService = carService;
     }
@@ -32,8 +33,14 @@ public class CarEndpoint {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+   @GetMapping("")
+    public List<CarDto> getAllCars()
+    {
+        return carService.getAllCars();
+    }
 
-    @PostMapping("/add")
+
+    @PostMapping("")
     public ResponseEntity<CarDto> saveCar (@Valid @RequestBody CarDto car, BindingResult result)
     {
         if (car.getId() != null )

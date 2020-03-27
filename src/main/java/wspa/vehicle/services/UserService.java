@@ -1,10 +1,7 @@
 package wspa.vehicle.services;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import wspa.vehicle.exceptions.DuplicateEmailException;
-import wspa.vehicle.exceptions.EmptyFieldsException;
-import wspa.vehicle.exceptions.InvalidEmailException;
 import wspa.vehicle.exceptions.UserNotFoundException;
 import wspa.vehicle.model.User;
 import wspa.vehicle.model.dto.CarDto;
@@ -55,6 +52,7 @@ public class UserService {
         return userRepository.findById(id).map(userMapper::userDto);
     }
 
+
     public List<UserOrderDto> getUserOrders(Long userId)
     {
         return userRepository.findById(userId)
@@ -78,8 +76,10 @@ public class UserService {
         else
             return carRepository.findAllByUser_Id(id).stream().map(carMapper::carDto).collect(Collectors.toList());
     }
-
-
-
+    public UserDto findByEmail(String email)
+    {
+        User user = userRepository.findByEmail(email);
+        return userMapper.userDto(user);
+    }
 
 }

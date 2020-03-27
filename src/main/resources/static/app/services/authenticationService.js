@@ -1,13 +1,14 @@
 angular.module('app')
     .constant('LOGIN_ENDPOINT', '/user-login')
     .constant('LOGOUT_ENDPOINT', '/user-logout')
-    .service('AuthenticationService', function($http, LOGIN_ENDPOINT, LOGOUT_ENDPOINT) {
+    .service('AuthenticationService', function($http, LOGIN_ENDPOINT, LOGOUT_ENDPOINT, $window) {
         this.authenticate = function(credentials, successCallback) {
             var authHeader = {Authorization: 'Basic ' + btoa(credentials.email+':'+credentials.password)};
             var config = {headers: authHeader};
             $http
                 .post(LOGIN_ENDPOINT, {}, config)
                 .then(function success(value) {
+                    $http.defaults.headers.post.Authorization = authHeader.Authorization;
                     successCallback();
                 }, function error(reason) {
                     console.log('Login error');

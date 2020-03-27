@@ -3,7 +3,7 @@
         <div class="mx-auto col-10 col-md-6">
             <div ng-show="!authenticated">
                 <h1>Logowanie: </h1>
-                <form>
+                <form name="form" ng-submit="ctrl.login()" role="form">
                     <div class="form-group">
                         <p>Login/email: </p>
                         <input type="email" ng-model="ctrl.credentials.email" placeholder="email">
@@ -13,7 +13,7 @@
                         <input type="password" placeholder="hasło" ng-model="ctrl.credentials.password">
                     </div>
                     <div class="form-group">
-                        <button ng-click="ctrl.login()" type="submit" class="btn btn-primary" >Zaloguj</button>
+                        <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || ctrl.dataLoading" >Zaloguj</button>
                         <br>
                         <h2>Nie masz konta?</h2>
                         <a href="#!user-add">Zarejestruj się</a>
@@ -23,7 +23,7 @@
             <div class="form-group">
                 <div ng-show="authenticated">
                     <h2> Czy na pewno chcesz się wylogować?</h2>
-                    <a href=""ng-click="ctrl.logout()" class="btn btn-primary">Wyloguj</a>
+                    <a href="/"ng-click="ctrl.logout()" class="btn btn-primary">Wyloguj</a>
                 </div>
             </div>
         </div>

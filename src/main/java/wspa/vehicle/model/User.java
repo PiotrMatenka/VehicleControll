@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -26,7 +25,7 @@ public class User {
     @NotNull(message = "Pole nie może być puste")
     private String lastName;
     @Column(unique = true)
-    @Email(message = "Nosz kurwa zły email")
+    @Email(message = "zły email")
     @NotNull(message = "Pole nie może być puste")
     private String email;
     @NotNull(message = "Pole nie może być puste")

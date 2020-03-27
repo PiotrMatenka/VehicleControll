@@ -1,14 +1,11 @@
 package wspa.vehicle.services;
 
 import org.springframework.stereotype.Service;
-import wspa.vehicle.exceptions.DuplicateRegistrationException;
-import wspa.vehicle.exceptions.UserNotFoundException;
+import wspa.vehicle.exceptions.DuplicateVinException;
 import wspa.vehicle.model.Car;
-import wspa.vehicle.model.User;
 import wspa.vehicle.model.dto.CarDto;
 import wspa.vehicle.model.mappers.CarMapper;
 import wspa.vehicle.repositories.CarRepository;
-import wspa.vehicle.repositories.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,21 +15,19 @@ import java.util.stream.Collectors;
 
 public class CarService {
     private CarRepository carRepository;
-    private UserRepository userRepository;
     private CarMapper carMapper;
 
-    public CarService(CarRepository carRepository, UserRepository userRepository, CarMapper carMapper) {
+    public CarService(CarRepository carRepository, CarMapper carMapper) {
         this.carRepository = carRepository;
-        this.userRepository = userRepository;
         this.carMapper = carMapper;
     }
 
     public CarDto saveCar(CarDto carDto)
     {
-        Optional<Car> carByRegistration = carRepository.findById(carDto.getId());
-        carByRegistration.ifPresent(c -> {
-            if (c.getRegistration().equals(carDto.getRegistration()))
-                throw new DuplicateRegistrationException();
+        Optional<Car> carById = carRepository.findById(carDto.getId());
+        carById.ifPresent(c -> {
+            if (c.getVin().equals(carDto.getVin()))
+                throw new DuplicateVinException();
         });
        return mapAndSave(carDto);
     }
@@ -50,7 +45,10 @@ public class CarService {
     {
         return carRepository.findById(id).map(carMapper::carDto);
     }
-
+    public List<CarDto> getAllCars()
+    {
+        return carRepository.findAll().stream().map(carMapper::carDto).collect(Collectors.toList());
+    }
 
 
 }
