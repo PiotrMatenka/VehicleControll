@@ -20,7 +20,7 @@
                     <th scope="col">Producent</th>
                     <th scope="col">Model</th>
                     <th scope="col">Rok produkcji</th>
-                    <th scope="col">Nr podwozia</th>
+                    <th scope="col">Nr nadwozia</th>
                     <th scope="col">Rejestracja</th>
                     <th scope="col" class="text-center">Akcja</th>
                 </tr>
@@ -35,6 +35,11 @@
                     <td> <button class="btn btn-sm btn-primary" title="Edytuj">
                         <a ng-href="#!car-add/{{car.id}}" class="text-white">
                             <i class="fas fa-edit"></i>
+                        </a>
+                    </button></td>
+                    <td> <button class=" btn btn-sm btn-warning" title="Historia napraw">
+                        <a ng-href="#!car-orders/{{car.id}}" class="text-white">
+                            <i class="fas fa-toolbox"></i>
                         </a>
                     </button></td>
                 </tr>

@@ -1,12 +1,27 @@
 package wspa.vehicle.model.mappers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import wspa.vehicle.model.Car;
 import wspa.vehicle.model.Order;
 import wspa.vehicle.model.User;
 import wspa.vehicle.model.dto.OrderDto;
+import wspa.vehicle.repositories.CarRepository;
+import wspa.vehicle.repositories.UserRepository;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+@Service
 public class OrderMapper {
-    public static OrderDto toDto (Order order)
+    private UserRepository userRepository;
+    private CarRepository carRepository;
+    @Autowired
+    public OrderMapper(UserRepository userRepository, CarRepository carRepository) {
+        this.userRepository = userRepository;
+        this.carRepository = carRepository;
+    }
+
+    public OrderDto toDto (Order order)
     {
         OrderDto dto = new OrderDto();
         dto.setDescription(order.getDescription());
@@ -17,7 +32,24 @@ public class OrderMapper {
         User user = order.getUser();
         dto.setUserId(user.getId());
         Car car = order.getCar();
-        dto.setCarId(car.getId());
+        dto.setCar(car.getId().toString() +" "+ car.getProducer() +" "+ car.getModel() +" "+ car.getYearOfProduction());
         return dto;
     }
+
+    public Order toEntity(OrderDto orderDto)
+    {
+        Order entity = new Order();
+        entity.setId(orderDto.getId());
+        entity.setDescription(orderDto.getDescription());
+        entity.setPrice(0);
+        entity.setStart(LocalDateTime.now());
+        entity.setEnd(null);
+        Optional<User> user = userRepository.findById(orderDto.getUserId());
+        user.ifPresent(entity::setUser);
+        Optional<Car> car = carRepository.findById(Long.valueOf(orderDto.getCar().substring(0,1)));
+        car.ifPresent(entity::setCar);
+        return entity;
+    }
+
+
 }

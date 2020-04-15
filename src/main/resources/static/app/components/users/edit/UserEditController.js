@@ -1,8 +1,7 @@
 angular.module('app')
-    .controller('UserEditController', function($scope, $routeParams, $location, $timeout, UserService, User) {
+    .controller('UserEditController', function( $routeParams, $location, $timeout, UserService, User) {
         const vm = this;
         const userId = $routeParams.userId;
-        $scope.submitted = false;
         if(userId)
             vm.user = UserService.get(userId);
         else
@@ -10,14 +9,12 @@ angular.module('app')
 
         const saveCallback = () => {
             $location.path(`/user-edit/${vm.user.id}`);
-            vm.msg = 'Dodano użytkownika';
         };
         const errorCallback = err => {
-            $scope.errorMessage = err.data.message;
+            vm.msg=`Błąd zapisu: ${err.data.message}`;
         };
 
         vm.saveUser = () => {
-            $scope.submitted = true;
             UserService.save(vm.user)
                 .then(saveCallback)
                 .catch(errorCallback);

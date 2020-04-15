@@ -12,7 +12,6 @@
     </div>
     <div class="row">
         <form class="mx-auto col-10 col-md-6">
-            <p ng-if="ctrl.car.id">Id: {{ctrl.car.id}}</p>
             <div class="form-group">
                 <label for="carProducerInput">Producent:</label>
                 <input type="text" class="form-control" id="carProducerInput" placeholder="producent" ng-model="ctrl.car.producer">
@@ -36,7 +35,7 @@
             <div class="form-group mb-3">
                 <button type="submit" class="btn btn-primary" ng-show="!ctrl.car.id"  ng-click="ctrl.saveCar()">Dodaj</button>
                 <button type="submit" class="btn btn-primary" ng-show="ctrl.car.id"  ng-click="ctrl.updateCar()">Zapisz</button>
-                <button type="submit" class="btn btn-primary" >
+                <button type="submit" class="btn btn-primary" ng-show="ctrl.car.id">
                     <a ng-href="#!asset-history/{{ctrl.car.id}}" class="text-white">
                         Historia napraw
                     </a>

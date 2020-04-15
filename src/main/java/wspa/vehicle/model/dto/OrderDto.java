@@ -15,6 +15,6 @@ public class OrderDto {
     private LocalDateTime start;
     private LocalDateTime end;
     private Long userId;
-    private Long carId;
+    private String car;
 
 }

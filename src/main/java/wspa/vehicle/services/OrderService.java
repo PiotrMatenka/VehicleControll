@@ -25,11 +25,13 @@ public class OrderService {
     private OrderRepository orderRepository;
     private UserRepository userRepository;
     private CarRepository carRepository;
+    private OrderMapper orderMapper;
 
-    public OrderService(OrderRepository orderRepository, UserRepository userRepository, CarRepository carRepository) {
+    public OrderService(OrderRepository orderRepository, UserRepository userRepository, CarRepository carRepository, OrderMapper orderMapper) {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
         this.carRepository = carRepository;
+        this.orderMapper = orderMapper;
     }
 
     public List<OrderDto> getAllActiveOrders()
@@ -54,9 +56,9 @@ public class OrderService {
     }
 
 
-    private List<OrderDto> getAll()
+    public List<OrderDto> getAll()
     {
-        return orderRepository.findAll().stream().map(OrderMapper::toDto).collect(Collectors.toList());
+        return orderRepository.findAll().stream().map(orderMapper::toDto).collect(Collectors.toList());
     }
 
     public OrderDto createOrder(OrderDto orderDto)
@@ -65,19 +67,8 @@ public class OrderService {
         activeOrderByUser.ifPresent(u ->{
             throw new ActiveOrderException();
         });
-        Optional<User>user = userRepository.findById(orderDto.getUserId());
-        Optional<Car> car = carRepository.findByUser_Id(orderDto.getUserId());
-        Order order = new Order();
-        Long userId = orderDto.getUserId();
-        Long carId = orderDto.getCarId();
-        order.setUser(user.orElseThrow(()->
-            new InvalidOrderException("Brak użytkownika o id: "+userId)
-        ));
-        order.setCar(car.orElseThrow(()->
-            new InvalidOrderException("Brak samochodu o id: "+carId)
-        ));
-        order.setStart(LocalDateTime.now());
-        return OrderMapper.toDto(orderRepository.save(order));
+
+        return mapAndSave(orderDto);
     }
 
     @Transactional
@@ -90,6 +81,12 @@ public class OrderService {
         else
             orderEntity.setEnd(LocalDateTime.now());
         return orderEntity.getEnd();
+    }
+    private OrderDto mapAndSave (OrderDto orderDto)
+    {
+        Order entity = orderMapper.toEntity(orderDto);
+        Order savedOrder = orderRepository.save(entity);
+        return orderMapper.toDto(savedOrder);
     }
 
 }

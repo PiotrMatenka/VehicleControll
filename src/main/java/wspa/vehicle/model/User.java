@@ -1,5 +1,6 @@
 package wspa.vehicle.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,9 +13,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Data
 @Getter
 @Setter
+@Data
 @Entity
 public class User {
     @Id
@@ -31,8 +32,10 @@ public class User {
     @NotNull(message = "Pole nie może być puste")
     private String password;
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @JsonBackReference
     private List<Car> cars = new ArrayList<>();
     @OneToMany(mappedBy = "user")
+    @JsonBackReference
     private List<Order> orders = new ArrayList<>();
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<UserRole> roles = new HashSet<>();

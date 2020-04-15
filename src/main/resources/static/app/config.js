@@ -11,6 +11,11 @@ angular.module('app')
                 controller: 'UserEditController',
                 controllerAs: 'ctrl'
             })
+            .when('/user-add/:userId', {
+                templateUrl: 'app/components/users/edit/userEdit.html',
+                controller: 'UserEditController',
+                controllerAs: 'ctrl'
+            })
 
             .when('/user-cars/:userId', {
                 templateUrl: 'app/components/users/userCars/carList.html',
@@ -28,8 +33,23 @@ angular.module('app')
                 controllerAs: 'ctrl'
             })
             .when('/car-add', {
-                templateUrl: 'app/components/cars/addCar.html',
+                templateUrl: 'app/components/cars/add/addCar.html',
                 controller: 'CarController',
+                controllerAs: 'ctrl'
+            })
+            .when('/car-add/:carId', {
+                templateUrl: 'app/components/cars/add/addCar.html',
+                controller: 'CarController',
+                controllerAs: 'ctrl'
+            })
+            .when('/order-add/',{
+                templateUrl: 'app/components/orders/addOrder.html',
+                controller: 'OrderController',
+                controllerAs: 'ctrl'
+            })
+            .when('/car-orders/:carId', {
+                templateUrl: 'app/components/cars/orderList/orderList.html',
+                controller: 'OrderListController',
                 controllerAs: 'ctrl'
             })
             .otherwise({

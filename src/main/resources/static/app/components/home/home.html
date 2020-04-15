@@ -1,3 +1,47 @@
-<h1>welcome {{ctrl.user.firstName}}</h1>
-<h1>Zobacz swoje samochody:</h1>
-<a href="#!user-cars/{{ctrl.user.id}}">Fury</a>
+<div class="container">
+    <div class="row">
+        <div class="mx-auto">
+            <h2> Cześć {{ctrl.user.firstName}}</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mx-auto col-10 col-md-6">
+            <div class="form-group">
+                <a class="btn btn-primary mb-3" ng-href="#!user-cars/{{ctrl.user.id}}">Twoje auta</a>
+                <a class="btn btn-danger mb-3" ng-href="#!order-add">Zleć naprawę</a>
+                <a class="btn btn-primary mb-3" ng-href="#!user-add/{{ctrl.user.id}}">Edytuj profil</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mx-auto">
+            <h2>Twoje aktywne zlecenia:</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-hover" >
+                <thead>
+                <tr>
+                    <th scope="col">Producent</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Czas rozpoczęcia zlecenia</th>
+                </tr>
+                </thead>
+                <tbody>
+                <br>
+                <tr ng-repeat="order in ctrl.orders">
+                    <td>{{order.carProducer}}</td>
+                    <td>{{order.carModel}}</td>
+                    <td>{{order.start | date:'yyyy-MM-dd HH:mm'}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="text-center" ng-if="!ctrl.orders.length">
+                <h1>Brak aktualnych zleceń</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,5 +1,6 @@
 package wspa.vehicle.model.mappers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wspa.vehicle.model.Car;
 import wspa.vehicle.model.User;
@@ -24,17 +25,17 @@ public class CarMapper {
         carDto.setYearOfProduction(car.getYearOfProduction());
         carDto.setVin(car.getVin());
         carDto.setRegistration(car.getRegistration());
-        User user = car.getUser();
-        carDto.setUserId(user.getId());
+        if (car.getUser()!= null)
+            carDto.setUserId(car.getUser().getId());
         return carDto;
     }
 
     public Car toEntity(CarDto car)
     {
         Car entity = new Car();
+        entity.setId(car.getId());
         entity.setProducer(car.getProducer());
         entity.setModel(car.getModel());
-        entity.setId(car.getId());
         entity.setYearOfProduction(car.getYearOfProduction());
         entity.setVin(car.getVin());
         entity.setRegistration(car.getRegistration());

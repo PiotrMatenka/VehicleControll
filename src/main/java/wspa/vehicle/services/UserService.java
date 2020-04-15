@@ -15,6 +15,7 @@ import wspa.vehicle.repositories.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,6 +48,14 @@ public class UserService {
         return mapAndSave(user);
     }
 
+    public UserDto updateUser (UserDto user)
+    {
+        User userByEmail = userRepository.findByEmail(user.getEmail());
+        if (userByEmail !=null && !userByEmail.getId().equals(user.getId()))
+            throw new DuplicateEmailException();
+        return mapAndSave(user);
+    }
+
     public Optional<UserDto> findById(Long id)
     {
         return userRepository.findById(id).map(userMapper::userDto);
@@ -59,27 +68,25 @@ public class UserService {
                 .map(User::getOrders)
                 .orElseThrow(UserNotFoundException::new)
                 .stream()
+                .filter(u -> u.getEnd() == null)
                 .map(UserOrderMapper::toDto)
                 .collect(Collectors.toList());
     }
+
     private UserDto mapAndSave(UserDto user)
     {
         User userEntity = userMapper.toEntity(user);
         User savedUser = userRepository.save(userEntity);
         return userMapper.userDto(savedUser);
     }
-    public List<CarDto> getCars (Long id )
+    public Set<CarDto> getCars (Long id )
     {
         Optional<User>user = userRepository.findById(id);
         if (user == null)
             throw new UserNotFoundException();
         else
-            return carRepository.findAllByUser_Id(id).stream().map(carMapper::carDto).collect(Collectors.toList());
+            return carRepository.findAllByUser_Id(id).stream().map(carMapper::carDto).collect(Collectors.toSet());
     }
-    public UserDto findByEmail(String email)
-    {
-        User user = userRepository.findByEmail(email);
-        return userMapper.userDto(user);
-    }
+
 
 }

@@ -1,28 +1,31 @@
 angular.module('app')
 .controller('CarController', function ($routeParams, $location, $timeout, CarService, Car, $http ) {
     const vm = this;
-    const carId = $routeParams.id;
+    const carId = $routeParams.carId;
+
     if (carId)
         vm.car = CarService.get(carId);
     else
         vm.car = new Car();
+
     function getUser() {
         $http.get('/user')
             .then(function success(response) {
                 vm.user = response.data;
+                vm.car.userId = vm.user.id;
 
             }, function error(response) {
                 console.log(response.status)
             })
     }
+     getUser();
+
     const saveCallback = () => {
-        getUser();
-        vm.car.userId = vm.user.id;
-        $location.path(`/car-add/${vm.car.id}`);
+        $location.path(`/home`);
         vm.msg = "Dodano samochód";
     };
     const errorCallback = err => {
-        $scope.errorMessage = err.data.message;
+        vm.msg=`Błąd zapisu: ${err.data.message}`;
     };
 
     vm.saveCar = () => {

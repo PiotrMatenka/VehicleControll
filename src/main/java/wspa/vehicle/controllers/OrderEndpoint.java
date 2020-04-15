@@ -23,6 +23,12 @@ public class OrderEndpoint {
         this.orderService = orderService;
     }
 
+    @GetMapping("")
+    public List<OrderDto> getAllOrders()
+    {
+        return orderService.getAll();
+    }
+
     @GetMapping("/active")
     public List<OrderDto> getAllActiveOrders()
     {

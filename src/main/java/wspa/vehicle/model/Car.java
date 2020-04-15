@@ -1,5 +1,6 @@
 package wspa.vehicle.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,10 +10,13 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
-@Data
+
 @Getter
 @Setter
+@Data
 @Entity
 public class Car {
     @Id
@@ -22,7 +26,7 @@ public class Car {
     private String producer;
     @NotEmpty
     private String model;
-    @Min(1970)
+    @Min(1950)
     @Max(2020)
     private int yearOfProduction;
     @NotEmpty
@@ -30,7 +34,11 @@ public class Car {
     @NotEmpty
     @Column(unique = true)
     private String registration;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
+    @OneToMany(mappedBy = "car")
+    @JsonBackReference
+    private List<Order> orders = new ArrayList<>();
 }

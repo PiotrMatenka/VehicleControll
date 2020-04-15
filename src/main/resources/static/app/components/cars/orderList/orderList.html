@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row">
+        <div class="mx-auto">
+            <h2>Historia napraw:</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-hover" >
+                <thead>
+                <tr>
+                    <th scope="col">Opis zlecenia</th>
+                    <th scope="col">Cena</th>
+                    <th scope="col">Data rozpoczęcia</th>
+                    <th scope="col">Data zakończenia</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="order in ctrl.orders">
+                    <td>{{order.description}}</td>
+                    <td>{{order.price}}</td>
+                    <td>{{order.start | date:'yyyy-MM-dd HH:mm'}}</td>
+                    <td>{{order.end | date:'yyyy-MM-dd HH:mm'}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="text-center" ng-if="!ctrl.orders.length">
+                <h1>Brak historii zleceń</h1>
+            </div>
+        </div>
+    </div>
+</div>

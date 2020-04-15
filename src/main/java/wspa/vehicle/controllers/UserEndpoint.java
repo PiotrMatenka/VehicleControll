@@ -26,12 +26,14 @@ import java.net.URI;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserEndpoint {
     private UserService userService;
+
     @Autowired
     public UserEndpoint(UserService userService)
     {
@@ -57,7 +59,7 @@ public class UserEndpoint {
     }
 
     @GetMapping("/{id}/cars")
-    public List<CarDto> getCars(@PathVariable Long id)
+    public Set<CarDto> getCars(@PathVariable Long id)
     {
         return userService.getCars(id);
     }
@@ -80,5 +82,15 @@ public class UserEndpoint {
                 .path("/{id}")
                 .buildAndExpand(savedUser.getId())
                 .toUri();
-            return ResponseEntity.created(location).body(savedUser);}
+            return ResponseEntity.created(location).body(savedUser);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDto> update (@PathVariable Long id, @RequestBody UserDto user)
+    {
+        if (!id.equals(user.getId()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Aktualizowany obiekt musi mieć id zgodne z id w ścieżce zasobu");
+        UserDto updatedUser = userService.updateUser(user);
+        return ResponseEntity.ok(updatedUser);
+    }
 }
