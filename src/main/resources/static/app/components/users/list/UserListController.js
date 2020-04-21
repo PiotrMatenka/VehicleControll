@@ -5,8 +5,8 @@ angular.module('app')
 
         vm.users = UserService.getAll();
 
-        vm.search = lastName => {
-            vm.users = UserService.getAll({lastName});
+        vm.search = text => {
+            vm.users = UserService.getAll({text});
         };
 
     });

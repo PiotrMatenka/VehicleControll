@@ -30,11 +30,15 @@
 
     <script src="app/components/home/HomeController.js"></script>
     <script src="app/components/users/edit/UserEditController.js"></script>
+    <script src="app/components/users/list/UserListController.js"></script>
     <script src="app/components/users/login/AuthenticationController.js"></script>
     <script src="app/components/users/userCars/CarListController.js"></script>
     <script src="app/components/cars/add/CarController.js"></script>
-    <script src="app/components/cars/orderList/orderListController.js"></script>
-    <script src="app/components/orders/OrderController.js"></script>
+    <script src="app/components/cars/orderList/CarOrdersController.js"></script>
+    <script src="app/components/orders/add/OrderAddController.js"></script>
+    <script src="app/components/orders/edit/OrderEditController.js"></script>
+    <script src="app/components/orders/list/active/OrderActiveListController.js"></script>
+    <script src="app/components/orders/list/history/OrderHistoryListController.js"></script>
 
 </head>
 <body>
@@ -46,7 +50,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-asset">
-                <a class="nav-link" href="#!users">Nowe zlecenie</a>
+                <a class="nav-link" href="#!user-login">Nowe zlecenie</a>
             </li>
             <li class="nav-login" ng-show="!authenticated">
                 <a class="nav-link" href="#!user-login">Zaloguj</a>
@@ -58,16 +62,16 @@
                 <a class="nav-link" href="#!user-add">Zarejestruj</a>
             </li>
             <li ng-show="authenticated">
-                <a class="nav-link" href="#!home">Twoje konto</a>
+                <a class="nav-link" href="#!home"><i class="fas fa-user-tie"></i> Twoje konto</a>
             </li>
         </ul>
 
     </div>
 </nav>
 <main role="main" class="container" >
-    <div class="jumbotron jumbo-custom " >
+    <div class="jumbotron jumbo-custom text-center " >
     </div>
-    <div class="nav text-center">
+    <div class="text-center">
         <h1>Stacja kontroli pojazdów</h1>
     </div>
 </main>

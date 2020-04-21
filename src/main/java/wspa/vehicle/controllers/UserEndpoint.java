@@ -1,33 +1,25 @@
 package wspa.vehicle.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import wspa.vehicle.exceptions.EmptyFieldsException;
-import wspa.vehicle.exceptions.InvalidEmailException;
-import wspa.vehicle.model.User;
+import wspa.vehicle.model.UserRole;
 import wspa.vehicle.model.dto.CarDto;
 import wspa.vehicle.model.dto.UserDto;
 import wspa.vehicle.model.dto.UserOrderDto;
-import wspa.vehicle.services.CarService;
 import wspa.vehicle.services.UserService;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
@@ -40,9 +32,12 @@ public class UserEndpoint {
         this.userService = userService;
     }
     @GetMapping("")
-    public List<UserDto> getAll()
+    public List<UserDto> getAll(@RequestParam (required = false) String text)
     {
-        return userService.findAll();
+        if (text != null)
+            return userService.findByLastName(text);
+        else
+            return userService.findAll();
     }
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> findById(@PathVariable Long id)
@@ -62,6 +57,12 @@ public class UserEndpoint {
     public Set<CarDto> getCars(@PathVariable Long id)
     {
         return userService.getCars(id);
+    }
+
+    @GetMapping(value = "/{id}/roles", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Optional<UserRole>> getUserRole(@PathVariable Long id)
+    {
+        return ResponseEntity.ok(userService.getAdminRole(id));
     }
 
     @PostMapping("")

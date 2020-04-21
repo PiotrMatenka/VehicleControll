@@ -32,7 +32,7 @@ public class OrderMapper {
         User user = order.getUser();
         dto.setUserId(user.getId());
         Car car = order.getCar();
-        dto.setCar(car.getId().toString() +" "+ car.getProducer() +" "+ car.getModel() +" "+ car.getYearOfProduction());
+        dto.setCarId(car.getId());
         return dto;
     }
 
@@ -41,12 +41,12 @@ public class OrderMapper {
         Order entity = new Order();
         entity.setId(orderDto.getId());
         entity.setDescription(orderDto.getDescription());
-        entity.setPrice(0);
+        entity.setPrice(orderDto.getPrice());
         entity.setStart(LocalDateTime.now());
         entity.setEnd(null);
         Optional<User> user = userRepository.findById(orderDto.getUserId());
         user.ifPresent(entity::setUser);
-        Optional<Car> car = carRepository.findById(Long.valueOf(orderDto.getCar().substring(0,1)));
+        Optional<Car> car = carRepository.findById(orderDto.getCarId());
         car.ifPresent(entity::setCar);
         return entity;
     }

@@ -1,7 +1,7 @@
 angular.module('app')
     .constant('LOGIN_ENDPOINT', '/user-login')
     .constant('LOGOUT_ENDPOINT', '/user-logout')
-    .service('AuthenticationService', function($http, LOGIN_ENDPOINT, LOGOUT_ENDPOINT, $window) {
+    .service('AuthenticationService', function($http, LOGIN_ENDPOINT, LOGOUT_ENDPOINT, $rootScope) {
         this.authenticate = function(credentials, successCallback) {
             var authHeader = {Authorization: 'Basic ' + btoa(credentials.email+':'+credentials.password)};
             var config = {headers: authHeader};
@@ -9,10 +9,10 @@ angular.module('app')
                 .post(LOGIN_ENDPOINT, {}, config)
                 .then(function success(value) {
                     $http.defaults.headers.post.Authorization = authHeader.Authorization;
+                    $rootScope.errmsg = '';
                     successCallback();
-                }, function error(reason) {
-                    console.log('Login error');
-                    console.log(reason);
+                }, function error() {
+                    $rootScope.errmsg = 'Błędny email lub hasło';
                 });
         }
         this.logout = function(successCallback) {

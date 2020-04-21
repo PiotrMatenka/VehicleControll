@@ -6,7 +6,7 @@ angular.module('app')
                 .then(function success(response) {
                     vm.user = response.data;
                     vm.orders = UserService.getOrders(vm.user.id);
-
+                    vm.userRole = UserService.getRoles(vm.user.id);
                 }, function error(response) {
                     console.log(response.status)
                 })

@@ -14,8 +14,7 @@
         <form class="mx-auto col-10 col-md-6">
             <div class="form-group">
                 <label for="carSelect">Samochód:</label>
-                <select class="form-control" id="carSelect" ng-model="ctrl.order.car">
-                    <option ng-repeat="car in ctrl.cars" ng-selected="car === ctrl.order.car">{{car.id}} {{car.producer}} {{car.model}} {{car.yearOfProduction}}</option>
+                <select  class="form-control" id="carSelect" ng-model="ctrl.order.carId" ng-options="car.id as car.producer + ' '+ car.model +' '+ car.yearOfProduction for car in ctrl.cars">
                 </select>
             </div>
             <div class="form-group">
@@ -24,8 +23,7 @@
                           placeholder="opis" ng-model="ctrl.order.description"></textarea>
             </div>
             <div class="form-group mb-3">
-                <button type="submit" class="btn btn-primary" ng-show="!ctrl.order.id"  ng-click="ctrl.saveOrder()">Dodaj</button>
-                <button type="submit" class="btn btn-primary" ng-show="ctrl.order.id"  ng-click="ctrl.updateOrder()">Zapisz</button>
+                <button type="submit" class="btn btn-primary" ng-click="ctrl.saveOrder()">Dodaj</button>
             </div>
         </form>
     </div>

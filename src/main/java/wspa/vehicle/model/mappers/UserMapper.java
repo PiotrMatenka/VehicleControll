@@ -29,6 +29,7 @@ public class UserMapper {
         dto.setFirstName(user.getFirstName());
         dto.setLastName(user.getLastName());
         dto.setEmail(user.getEmail());
+        dto.setPhoneNumber(user.getPhoneNumber());
         String passwordHash = passwordEncoder.encode(user.getPassword());
         dto.setPassword(passwordHash);
         dto.setRoles(user.getRoles());
@@ -42,6 +43,7 @@ public class UserMapper {
         entity.setEmail(user.getEmail());
         String passwordHash = passwordEncoder.encode(user.getPassword());
         entity.setPassword(passwordHash);
+        entity.setPhoneNumber(user.getPhoneNumber());
         UserRole defaultRole = userRoleRepository.findByRole(DEFAULT_ROLE);
         user.getRoles().add(defaultRole);
         entity.setRoles(user.getRoles());

@@ -8,6 +8,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -31,6 +33,9 @@ public class User {
     private String email;
     @NotNull(message = "Pole nie może być puste")
     private String password;
+    @NotNull(message = "Pole nie może być puste")
+    @Pattern(regexp = "[\\d]{9}", message = "Numer musi być 9 cyfrowy")
+    private String phoneNumber;
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @JsonBackReference
     private List<Car> cars = new ArrayList<>();
@@ -38,6 +43,10 @@ public class User {
     @JsonBackReference
     private List<Order> orders = new ArrayList<>();
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinTable(name = "role_user",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+    )
     private Set<UserRole> roles = new HashSet<>();
 
 }

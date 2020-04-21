@@ -5,11 +5,14 @@ angular.module('app')
         update: {
             method: 'PUT'
         }
+
     });
 })
-.service('OrderService', function () {
+.service('OrderService', function (Order) {
+    this.getAll = params => Order.query(params);
     this.save = order => order.$save();
     this.update = order => order.$update({id: order.id});
+    this.get = index => Order.get({id: index});
 })
 .service('OrderEndService', function ($http) {
     this.save = orderId => $http.post(`/api/orders/${orderId}/end`);

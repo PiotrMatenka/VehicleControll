@@ -1,15 +1,14 @@
 package wspa.vehicle.services;
 
 import org.springframework.stereotype.Service;
-import wspa.vehicle.exceptions.ActiveOrderException;
-import wspa.vehicle.exceptions.InvalidOrderException;
-import wspa.vehicle.exceptions.OrderAlreadyFinishedException;
-import wspa.vehicle.exceptions.OrderNotFoundException;
+import wspa.vehicle.exceptions.*;
 import wspa.vehicle.model.Car;
 import wspa.vehicle.model.Order;
 import wspa.vehicle.model.User;
 import wspa.vehicle.model.dto.OrderDto;
+import wspa.vehicle.model.dto.UserOrderDto;
 import wspa.vehicle.model.mappers.OrderMapper;
+import wspa.vehicle.model.mappers.UserOrderMapper;
 import wspa.vehicle.repositories.CarRepository;
 import wspa.vehicle.repositories.OrderRepository;
 import wspa.vehicle.repositories.UserRepository;
@@ -23,54 +22,59 @@ import java.util.stream.Collectors;
 @Service
 public class OrderService {
     private OrderRepository orderRepository;
-    private UserRepository userRepository;
-    private CarRepository carRepository;
     private OrderMapper orderMapper;
 
-    public OrderService(OrderRepository orderRepository, UserRepository userRepository, CarRepository carRepository, OrderMapper orderMapper) {
+    public OrderService(OrderRepository orderRepository, OrderMapper orderMapper) {
         this.orderRepository = orderRepository;
-        this.userRepository = userRepository;
-        this.carRepository = carRepository;
         this.orderMapper = orderMapper;
     }
 
-    public List<OrderDto> getAllActiveOrders()
+    public Optional<OrderDto> findById (Long id)
     {
-        List<OrderDto> orders = getAll();
-        List<OrderDto> activeOrders = new ArrayList<>();
-        orders.forEach(orderDto -> {
-            if (orderDto.getEnd() ==null)
-                activeOrders.add(orderDto);
-        });
-        return activeOrders;
-    }
-    public List<OrderDto> getAllEndedOrders()
-    {
-        List<OrderDto> orders = getAll();
-        List<OrderDto> endedOrders = new ArrayList<>();
-        orders.forEach(orderDto -> {
-            if (orderDto.getEnd() !=null)
-                endedOrders.add(orderDto);
-        });
-        return endedOrders;
+        return orderRepository.findById(id).map(orderMapper::toDto);
     }
 
-
-    public List<OrderDto> getAll()
+    public List<UserOrderDto> getAllActiveOrders()
     {
-        return orderRepository.findAll().stream().map(orderMapper::toDto).collect(Collectors.toList());
+     return orderRepository.findAll()
+             .stream()
+             .filter(o -> o.getEnd() == null)
+             .map(UserOrderMapper::toDto)
+             .collect(Collectors.toList());
+    }
+
+    public List<UserOrderDto> getAll()
+    {
+        return orderRepository.findAll()
+                .stream()
+                .map(UserOrderMapper::toDto)
+                .collect(Collectors.toList());
+    }
+    public List<UserOrderDto> getByUserName (String text)
+    {
+        return orderRepository.findByUser_LastName(text)
+                .stream()
+                .map(UserOrderMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     public OrderDto createOrder(OrderDto orderDto)
     {
-        Optional<Order> activeOrderByUser  = orderRepository.findByUser_IdAndEndIsNull(orderDto.getUserId());
-        activeOrderByUser.ifPresent(u ->{
+        Optional<Order> activeOrderByCar  = orderRepository.findByCar_IdAndEndIsNull(orderDto.getCarId());
+        activeOrderByCar.ifPresent(u ->{
             throw new ActiveOrderException();
         });
 
         return mapAndSave(orderDto);
     }
+    public OrderDto updateOrder(OrderDto orderDto)
+    {
+        Optional<Order> orderById = orderRepository.findById(orderDto.getId());
+        if (orderById == null)
+            throw new OrderNotFoundException();
 
+        return mapAndSave(orderDto);
+    }
     @Transactional
     public LocalDateTime finishOrder (Long orderId)
     {
@@ -78,6 +82,8 @@ public class OrderService {
         Order orderEntity = order.orElseThrow(OrderNotFoundException::new);
         if (orderEntity.getEnd()!=null)
             throw new OrderAlreadyFinishedException();
+        if (orderEntity.getPrice() <= 0)
+            throw new InvalidPriceException();
         else
             orderEntity.setEnd(LocalDateTime.now());
         return orderEntity.getEnd();

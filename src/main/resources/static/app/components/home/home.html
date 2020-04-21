@@ -4,15 +4,39 @@
             <h2> Cześć {{ctrl.user.firstName}}</h2>
         </div>
     </div>
+    <br>
     <div class="row">
-        <div class="mx-auto col-10 col-md-6">
-            <div class="form-group">
-                <a class="btn btn-primary mb-3" ng-href="#!user-cars/{{ctrl.user.id}}">Twoje auta</a>
-                <a class="btn btn-danger mb-3" ng-href="#!order-add">Zleć naprawę</a>
-                <a class="btn btn-primary mb-3" ng-href="#!user-add/{{ctrl.user.id}}">Edytuj profil</a>
+        <div class="mx-auto">
+            <a class="btn btn-primary mb-3" ng-href="#!user-cars/{{ctrl.user.id}}">Twoje auta</a>
+            <a class="btn btn-danger mb-3" ng-href="#!order-add">Zleć naprawę</a>
+            <a class="btn btn-primary mb-3" ng-href="#!user-add/{{ctrl.user.id}}">Edytuj profil</a>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="container" ng-if="ctrl.userRole.id">
+        <div class="row">
+            <div class="mx-auto">
+                <h2>Admin </h2>
+            </div>
+        </div>
+        <br>
+        <div class="row ">
+            <div class="mx-auto">
+                <h2>Zlecenia użytkowników:</h2>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="mx-auto">
+                <a class="btn btn-primary mb-3" ng-href="#!orders-active">W trakcie</a>
+                <a class="btn btn-warning mb-3" ng-href="#!orders-history">Wszystkie</a>
+                <a class="btn btn-dark mb-3" ng-href="#!users-list">Użytkownicy</a>
             </div>
         </div>
     </div>
+    <br>
+    <br>
     <div class="row">
         <div class="mx-auto">
             <h2>Twoje aktywne zlecenia:</h2>

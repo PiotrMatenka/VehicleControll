@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row">
+        <div class="mx-auto">
+            <h2>Edycja zlecenia</h2>
+        </div>
+    </div>
+    <div class="row" ng-if="ctrl.msg">
+        <div class="mx-auto">
+            <p class="text-danger">{{ctrl.msg}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <form class="mx-auto col-10 col-md-6">
+            <div class="form-group" ng-if="ctrl.order.id">
+                <h2 ng-model="ctrl.order.car">{{ctrl.order.car}}</h2>
+            </div>
+            <div class="form-group" ng-if="ctrl.order.id">
+                <label for="orderPrice">Wycena (w pln): </label>
+                <input type="number" class="form-control" id="orderPrice" placeholder="cena" ng-model="ctrl.order.price">
+            </div>
+            <div class="form-group">
+                <label for="descriptionInput">Opis usterki lub zlecenia:</label>
+                <textarea class="form-control" id="descriptionInput" rows="10"
+                          placeholder="opis" ng-model="ctrl.order.description"></textarea>
+            </div>
+            <div class="form-group mb-3">
+                <button type="submit" class="btn btn-primary" ng-show="!ctrl.order.id"  ng-click="ctrl.saveOrder()">Dodaj</button>
+                <button type="submit" class="btn btn-primary" ng-show="ctrl.order.id"  ng-click="ctrl.updateOrder()">Zapisz</button>
+            </div>
+        </form>
+    </div>
+</div>

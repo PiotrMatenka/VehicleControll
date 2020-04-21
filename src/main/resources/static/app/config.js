@@ -43,13 +43,33 @@ angular.module('app')
                 controllerAs: 'ctrl'
             })
             .when('/order-add/',{
-                templateUrl: 'app/components/orders/addOrder.html',
-                controller: 'OrderController',
+                templateUrl: 'app/components/orders/add/addOrder.html',
+                controller: 'OrderAddController',
+                controllerAs: 'ctrl'
+            })
+            .when('/order-edit/:orderId', {
+                templateUrl: 'app/components/orders/edit/editOrder.html',
+                controller: 'OrderEditController',
                 controllerAs: 'ctrl'
             })
             .when('/car-orders/:carId', {
                 templateUrl: 'app/components/cars/orderList/orderList.html',
-                controller: 'OrderListController',
+                controller: 'CarOrdersController',
+                controllerAs: 'ctrl'
+            })
+            .when('/orders-history',{
+                templateUrl: 'app/components/orders/list/history/orderHistoryList.html',
+                controller: 'OrderHistoryListController',
+                controllerAs: 'ctrl'
+            })
+            .when('/orders-active', {
+                templateUrl: 'app/components/orders/list/active/orderActiveList.html',
+                controller: 'OrderActiveListController',
+                controllerAs: 'ctrl'
+            })
+            .when('/users-list', {
+                templateUrl: 'app/components/users/list/userList.html',
+                controller: 'UserListController',
                 controllerAs: 'ctrl'
             })
             .otherwise({

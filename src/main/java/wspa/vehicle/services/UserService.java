@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import wspa.vehicle.exceptions.DuplicateEmailException;
 import wspa.vehicle.exceptions.UserNotFoundException;
 import wspa.vehicle.model.User;
+import wspa.vehicle.model.UserRole;
 import wspa.vehicle.model.dto.CarDto;
 import wspa.vehicle.model.dto.UserDto;
 import wspa.vehicle.model.dto.UserOrderDto;
@@ -12,6 +13,7 @@ import wspa.vehicle.model.mappers.UserMapper;
 import wspa.vehicle.model.mappers.UserOrderMapper;
 import wspa.vehicle.repositories.CarRepository;
 import wspa.vehicle.repositories.UserRepository;
+import wspa.vehicle.repositories.UserRoleRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +39,14 @@ public class UserService {
     {
         return userRepository.findAll().stream().map(userMapper::userDto).collect(Collectors.toList());
     }
+
+    public List<UserDto> findByLastName (String text)
+    {
+        return userRepository.findByLastNameContainingIgnoreCase(text)
+                .stream().map(userMapper::userDto)
+                .collect(Collectors.toList());
+    }
+
     public UserDto saveUser (UserDto user)
     {
         User userByEmail = userRepository.findByEmail(user.getEmail());
@@ -88,5 +98,17 @@ public class UserService {
             return carRepository.findAllByUser_Id(id).stream().map(carMapper::carDto).collect(Collectors.toSet());
     }
 
-
+    public Optional<UserRole> getAdminRole(Long id)
+    {
+      Set<UserRole> userRoles = userRepository.findById(id)
+              .map(User::getRoles)
+              .orElseThrow(UserNotFoundException::new)
+              .stream()
+              .collect(Collectors.toSet());
+      UserRole userRole = new UserRole();
+      for (UserRole r:userRoles)
+          if (r.getRole().equals("ROLE_ADMIN"))
+              userRole = r;
+      return Optional.of(userRole);
+    }
 }

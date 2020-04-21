@@ -1,12 +1,14 @@
 package wspa.vehicle.controllers;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import wspa.vehicle.exceptions.InvalidOrderException;
 import wspa.vehicle.model.dto.OrderDto;
+import wspa.vehicle.model.dto.UserOrderDto;
 import wspa.vehicle.repositories.OrderRepository;
 import wspa.vehicle.services.OrderService;
 
@@ -23,24 +25,29 @@ public class OrderEndpoint {
         this.orderService = orderService;
     }
 
-    @GetMapping("")
-    public List<OrderDto> getAllOrders()
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderDto> getById(@PathVariable Long id)
     {
-        return orderService.getAll();
+        return orderService.findById(id).map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/active")
-    public List<OrderDto> getAllActiveOrders()
+    @GetMapping(value = "")
+    public List<UserOrderDto> getAll(@RequestParam(required = false) String text)
+
+    {
+        if (text != null)
+        {
+            return orderService.getByUserName(text);
+        }else
+            return orderService.getAll();
+    }
+
+    @GetMapping(value = "/active" )
+    public List<UserOrderDto> getAllActiveOrders(@RequestParam(required = false) String text)
     {
         return orderService.getAllActiveOrders();
     }
-
-    @GetMapping("/archives")
-    public List<OrderDto> getAllEndedOrders()
-    {
-        return orderService.getAllEndedOrders();
-    }
-
     @PostMapping("")
     ResponseEntity<OrderDto> saveOrder (@RequestBody OrderDto orderDto)
     {
@@ -63,5 +70,14 @@ public class OrderEndpoint {
     {
         LocalDateTime endTime = orderService.finishOrder(id);
         return ResponseEntity.accepted().body(endTime);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<OrderDto> update (@PathVariable Long id, @RequestBody OrderDto orderDto)
+    {
+        if (!id.equals(orderDto.getId()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Aktualizowany obiekt musi mieć id zgodne z id w ścieżce zasobu");
+        OrderDto updatedOrder = orderService.updateOrder(orderDto);
+        return ResponseEntity.ok(updatedOrder);
     }
 }
