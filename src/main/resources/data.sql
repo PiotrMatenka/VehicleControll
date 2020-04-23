@@ -36,8 +36,8 @@ insert into commission (id, description, price, start, end, user_id, car_id) val
 
 
 insert into user_role(id, role, description) VALUES
-(1,'ROLE_USER', 'default role for user'),
-(2, 'ROLE_ADMIN', 'admin role, can control orders');
+(1,'USER', 'default role for user'),
+(2, 'ADMIN', 'admin role, can control orders');
 
 insert into role_user(user_id, role_id) values
 (1,1),
@@ -45,4 +45,6 @@ insert into role_user(user_id, role_id) values
 (3,2),
 (4,1),
 (5,1),
-(6,1);
+(6,1),
+(3,1)
+;

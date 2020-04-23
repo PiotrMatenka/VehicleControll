@@ -1,5 +1,5 @@
 angular.module('app')
-    .controller('HomeController', function ( $http, UserService) {
+    .controller('AccountController', function ( $http, UserService) {
         var vm = this;
         function getUser() {
             $http.get('/user')

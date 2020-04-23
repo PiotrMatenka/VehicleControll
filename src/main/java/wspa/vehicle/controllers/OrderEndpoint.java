@@ -1,15 +1,15 @@
 package wspa.vehicle.controllers;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import wspa.vehicle.exceptions.InvalidOrderException;
 import wspa.vehicle.model.dto.OrderDto;
 import wspa.vehicle.model.dto.UserOrderDto;
-import wspa.vehicle.repositories.OrderRepository;
 import wspa.vehicle.services.OrderService;
 
 import java.net.URI;
@@ -25,6 +25,7 @@ public class OrderEndpoint {
         this.orderService = orderService;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<OrderDto> getById(@PathVariable Long id)
     {
@@ -32,6 +33,7 @@ public class OrderEndpoint {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value = "")
     public List<UserOrderDto> getAll(@RequestParam(required = false) String text)
 
@@ -43,11 +45,14 @@ public class OrderEndpoint {
             return orderService.getAll();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value = "/active" )
     public List<UserOrderDto> getAllActiveOrders(@RequestParam(required = false) String text)
     {
         return orderService.getAllActiveOrders();
     }
+
+    @PostAuthorize("hasAuthority('USER')")
     @PostMapping("")
     ResponseEntity<OrderDto> saveOrder (@RequestBody OrderDto orderDto)
     {
@@ -65,6 +70,8 @@ public class OrderEndpoint {
                 .toUri();
         return ResponseEntity.created(location).body(savedOrder);
     }
+
+    @PostAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/{id}/end")
     public ResponseEntity finishOrder(@PathVariable Long id)
     {
@@ -72,6 +79,7 @@ public class OrderEndpoint {
         return ResponseEntity.accepted().body(endTime);
     }
 
+    @PostAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<OrderDto> update (@PathVariable Long id, @RequestBody OrderDto orderDto)
     {

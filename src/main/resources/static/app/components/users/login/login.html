@@ -6,8 +6,8 @@
     </div>
     <div class="row">
         <div class="mx-auto">
-        <div class="mx-auto col-10 col-md-6">
-            <div ng-show="!authenticated">
+            <div class="mx-auto col-10 col-md-6">
+             <div ng-show="!authenticated">
                 <h1>Logowanie: </h1>
                 <br>
                 <br>
@@ -20,19 +20,26 @@
                         <p>Hasło: </p>
                         <input type="password" placeholder="hasło" ng-model="ctrl.credentials.password">
                     </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || ctrl.dataLoading" >Zaloguj</button>
-                        <br>
-                        <br>
-                        <a class="btn btn-dark mb-3" ng-href="#!user-add">Zarejestruj się</a>
+                    <div class="row">
+                        <div class="mx-auto">
+                                <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || ctrl.dataLoading" >Zaloguj</button>
+                        </div>
                     </div>
                 </form>
+             </div>
             </div>
-        </div>
+            <br>
+            <div class="mx-auto" ng-show="!authenticated">
+                <h4>Nie masz konta?</h4>
+                <br>
+                <a class="btn btn-dark" ng-href="#!user-add">Zarejestruj się</a>
+            </div>
             <div class="form-group">
-                <div ng-show="authenticated">
-                    <h2> Czy na pewno chcesz się wylogować?</h2>
-                    <a href="/"ng-click="ctrl.logout()" class="btn btn-primary">Wyloguj</a>
+                <div class="mx-auto">
+                    <div ng-show="authenticated">
+                        <h2> Czy na pewno chcesz się wylogować?</h2>
+                        <a href="/"ng-click="ctrl.logout()" class="btn btn-primary">Wyloguj</a>
+                    </div>
                 </div>
             </div>
         </div>

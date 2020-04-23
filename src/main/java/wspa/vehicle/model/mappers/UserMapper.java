@@ -15,7 +15,7 @@ import wspa.vehicle.repositories.UserRoleRepository;
 public class UserMapper {
 
     private UserRoleRepository userRoleRepository;
-    private static final String DEFAULT_ROLE=  "ROLE_USER";
+    private static final String DEFAULT_ROLE=  "USER";
     private PasswordEncoder passwordEncoder;
     @Autowired
     public UserMapper( UserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder) {

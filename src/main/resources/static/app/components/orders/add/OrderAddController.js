@@ -21,7 +21,7 @@ const orderId = $routeParams.orderId;
     getUser();
 
     const saveCallback = () => {
-        $location.path(`/home`);
+        $location.path(`/account`);
         vm.msg = "Dodano samochód";
     };
 

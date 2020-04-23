@@ -20,15 +20,15 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <!--Application-->
-    <script src="app/index.js"></script>
-    <script src="app/config.js"></script>
+    <script src="app/components/index.js"></script>
+    <script src="app/components/config.js"></script>
 
     <script src="app/services/userServices.js"></script>
     <script src="app/services/authenticationService.js"></script>
     <script src="app/services/carServices.js"></script>
     <script src="app/services/orderServices.js"></script>
 
-    <script src="app/components/home/HomeController.js"></script>
+    <script src="app/components/account/AccountController.js"></script>
     <script src="app/components/users/edit/UserEditController.js"></script>
     <script src="app/components/users/list/UserListController.js"></script>
     <script src="app/components/users/login/AuthenticationController.js"></script>
@@ -62,19 +62,24 @@
                 <a class="nav-link" href="#!user-add">Zarejestruj</a>
             </li>
             <li ng-show="authenticated">
-                <a class="nav-link" href="#!home"><i class="fas fa-user-tie"></i> Twoje konto</a>
+                <a class="nav-link" href="#!account"><i class="fas fa-user-tie"></i> Twoje konto</a>
             </li>
         </ul>
 
     </div>
 </nav>
 <main role="main" class="container" >
-    <div class="jumbotron jumbo-custom text-center " >
-    </div>
+        <div class="jumbotron jumbo-custom text-center my-2 " >
+        </div>
     <div class="text-center">
         <h1>Stacja kontroli pojazdów</h1>
     </div>
 </main>
 <div ng-view></div>
+<footer id="sticky-footer" class="py-4 text-black-50">
+    <div class="container text-center">
+        <small>Copyright &copy; piot&art.com.pl</small>
+    </div>
+</footer>
 </body>
 </html>

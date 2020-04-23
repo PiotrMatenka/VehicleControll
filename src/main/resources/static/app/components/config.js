@@ -2,7 +2,7 @@ angular.module('app')
     .config(function ($routeProvider, $httpProvider) {
         $routeProvider
             .when('/users', {
-                templateUrl: 'app/components/users/list/userList.html',
+                templateUrl: 'app/adminOnly/userList.html',
                 controller: 'UserListController',
                 controllerAs: 'ctrl'
             })
@@ -27,9 +27,9 @@ angular.module('app')
                 controller: 'AuthenticationController',
                 controllerAs: 'ctrl'
             })
-            .when ('/home', {
-                templateUrl: 'app/components/home/home.html',
-                controller: 'HomeController',
+            .when ('/account', {
+                templateUrl: 'app/components/account/account.html',
+                controller: 'AccountController',
                 controllerAs: 'ctrl'
             })
             .when('/car-add', {
@@ -48,7 +48,7 @@ angular.module('app')
                 controllerAs: 'ctrl'
             })
             .when('/order-edit/:orderId', {
-                templateUrl: 'app/components/orders/edit/editOrder.html',
+                templateUrl: 'app/adminOnly/editOrder.html',
                 controller: 'OrderEditController',
                 controllerAs: 'ctrl'
             })
@@ -58,22 +58,25 @@ angular.module('app')
                 controllerAs: 'ctrl'
             })
             .when('/orders-history',{
-                templateUrl: 'app/components/orders/list/history/orderHistoryList.html',
+                templateUrl: 'app/adminOnly/orderHistoryList.html',
                 controller: 'OrderHistoryListController',
                 controllerAs: 'ctrl'
             })
             .when('/orders-active', {
-                templateUrl: 'app/components/orders/list/active/orderActiveList.html',
+                templateUrl: 'app/adminOnly/orderActiveList.html',
                 controller: 'OrderActiveListController',
                 controllerAs: 'ctrl'
             })
             .when('/users-list', {
-                templateUrl: 'app/components/users/list/userList.html',
+                templateUrl: 'app/adminOnly/userList.html',
                 controller: 'UserListController',
                 controllerAs: 'ctrl'
             })
+            .when('/home', {
+                templateUrl: 'app/components/home/home.html'
+            })
             .otherwise({
-                redirectTo: '/',
+                redirectTo: '/home',
             });
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 

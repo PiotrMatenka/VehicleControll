@@ -11,8 +11,11 @@ angular.module('app')
                     $http.defaults.headers.post.Authorization = authHeader.Authorization;
                     $rootScope.errmsg = '';
                     successCallback();
-                }, function error() {
-                    $rootScope.errmsg = 'Błędny email lub hasło';
+                }, function error(err) {
+                    if (err.status == 403 )
+                        $rootScope.errmsg = 'ups, spróbuj ponownie'
+                    else
+                     $rootScope.errmsg = 'Błędny email lub hasło';
                 });
         }
         this.logout = function(successCallback) {

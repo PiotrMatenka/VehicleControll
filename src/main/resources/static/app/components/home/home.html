@@ -1,71 +1,22 @@
 <div class="container">
     <div class="row">
-        <div class="mx-auto">
-            <h2> Cześć {{ctrl.user.firstName}}</h2>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="mx-auto">
-            <a class="btn btn-primary mb-3" ng-href="#!user-cars/{{ctrl.user.id}}">Twoje auta</a>
-            <a class="btn btn-danger mb-3" ng-href="#!order-add">Zleć naprawę</a>
-            <a class="btn btn-primary mb-3" ng-href="#!user-add/{{ctrl.user.id}}">Edytuj profil</a>
-        </div>
-    </div>
-    <br>
-    <br>
-    <div class="container" ng-if="ctrl.userRole.id">
-        <div class="row">
-            <div class="mx-auto">
-                <h2>Admin </h2>
+        <div class="mx-auto col-10 mr-2 " >
+            <div class="row">
+                <div class="mx-auto">
+                    <h2>Jak nas znależć: </h2>
+                    <img src="../img/mapa.png" class="img-fluid" width="500" height="300">
+                </div>
+                <div class="mx-auto">
+                    <br>
+                    <h2>Kontakt: </h2>
+                    <h3><i class="fas fa-envelope"></i> biuro@piot&art.pl</h3>
+                    <h3><i class="fas fa-phone-alt"></i> 700880774</h3>
+                    <h3><i class="fas fa-map-marker-alt"></i> Bursaki 12, 21-150 Lublin</h3>
+                </div>
             </div>
         </div>
-        <br>
-        <div class="row ">
-            <div class="mx-auto">
-                <h2>Zlecenia użytkowników:</h2>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="mx-auto">
-                <a class="btn btn-primary mb-3" ng-href="#!orders-active">W trakcie</a>
-                <a class="btn btn-warning mb-3" ng-href="#!orders-history">Wszystkie</a>
-                <a class="btn btn-dark mb-3" ng-href="#!users-list">Użytkownicy</a>
-            </div>
-        </div>
+
     </div>
     <br>
-    <br>
-    <div class="row">
-        <div class="mx-auto">
-            <h2>Twoje aktywne zlecenia:</h2>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <table class="table table-hover" >
-                <thead>
-                <tr>
-                    <th scope="col">Producent</th>
-                    <th scope="col">Model</th>
-                    <th scope="col">Czas rozpoczęcia zlecenia</th>
-                </tr>
-                </thead>
-                <tbody>
-                <br>
-                <tr ng-repeat="order in ctrl.orders">
-                    <td>{{order.carProducer}}</td>
-                    <td>{{order.carModel}}</td>
-                    <td>{{order.start | date:'yyyy-MM-dd HH:mm'}}</td>
-                </tr>
-                </tbody>
-            </table>
-            <div class="text-center" ng-if="!ctrl.orders.length">
-                <h1>Brak aktualnych zleceń</h1>
-            </div>
-        </div>
-    </div>
+
 </div>
-
-

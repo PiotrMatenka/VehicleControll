@@ -107,7 +107,7 @@ public class UserService {
               .collect(Collectors.toSet());
       UserRole userRole = new UserRole();
       for (UserRole r:userRoles)
-          if (r.getRole().equals("ROLE_ADMIN"))
+          if (r.getRole().equals("ADMIN"))
               userRole = r;
       return Optional.of(userRole);
     }

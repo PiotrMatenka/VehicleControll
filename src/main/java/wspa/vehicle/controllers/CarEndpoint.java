@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,7 +46,7 @@ public class CarEndpoint {
         return carService.getCarOrders(id);
     }
 
-
+    @PreAuthorize("hasAuthority('USER')")
     @PostMapping(value = "")
     public ResponseEntity<CarDto> saveCar (@RequestBody CarDto car, BindingResult result)
     {
@@ -61,6 +62,7 @@ public class CarEndpoint {
         return ResponseEntity.created(location).body(savedCar);
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @PutMapping("/{id}")
     public ResponseEntity<CarDto> update (@PathVariable Long id, @RequestBody CarDto car)
     {

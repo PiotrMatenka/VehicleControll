@@ -21,7 +21,7 @@ angular.module('app')
      getUser();
 
     const saveCallback = () => {
-        $location.path(`/home`);
+        $location.path(`/account`);
         vm.msg = "Dodano samochód";
     };
     const errorCallback = err => {

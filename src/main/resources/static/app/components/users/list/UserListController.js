@@ -1,5 +1,5 @@
 angular.module('app')
-    .controller('UserListController', function(UserService,  User) {
+    .controller('UserListController', function(UserService) {
 
         const vm = this;
 

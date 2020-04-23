@@ -63,7 +63,7 @@
                     <p ng-message="required">Prosimy podać adres email!</p>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" ng-show="!ctrl.user.id">
                     <label for="passwordInput">Hasło:</label>
                     <div class="flex-container" >
                         <input type="password" name="password" class="form-control" id="passwordInput" placeholder="hasło" required ng-model="ctrl.user.password">
