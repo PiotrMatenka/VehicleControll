@@ -43,7 +43,8 @@ public class UserService {
     public List<UserDto> findByLastName (String text)
     {
         return userRepository.findByLastNameContainingIgnoreCase(text)
-                .stream().map(userMapper::userDto)
+                .stream()
+                .map(userMapper::userDto)
                 .collect(Collectors.toList());
     }
 
@@ -68,7 +69,8 @@ public class UserService {
 
     public Optional<UserDto> findById(Long id)
     {
-        return userRepository.findById(id).map(userMapper::userDto);
+        return userRepository.findById(id)
+                .map(userMapper::userDto);
     }
 
 
@@ -92,7 +94,7 @@ public class UserService {
     public Set<CarDto> getCars (Long id )
     {
         Optional<User>user = userRepository.findById(id);
-        if (user == null)
+        if (!user.isPresent())
             throw new UserNotFoundException();
         else
             return carRepository.findAllByUser_Id(id).stream().map(carMapper::carDto).collect(Collectors.toSet());

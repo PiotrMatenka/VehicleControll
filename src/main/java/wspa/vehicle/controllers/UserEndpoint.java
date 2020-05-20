@@ -11,6 +11,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import wspa.vehicle.exceptions.UserNotFoundException;
 import wspa.vehicle.model.UserRole;
 import wspa.vehicle.model.dto.CarDto;
 import wspa.vehicle.model.dto.UserDto;
@@ -50,7 +51,7 @@ public class UserEndpoint {
     {
         return userService.findById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(UserNotFoundException::new);
     }
 
     @PreAuthorize("isUser(#id)")
