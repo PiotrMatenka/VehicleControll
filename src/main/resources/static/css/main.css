@@ -12,3 +12,6 @@
 .flex-container{
     display: flex;
 }
+.jumbotron{
+    background-color: burlywood;
+}

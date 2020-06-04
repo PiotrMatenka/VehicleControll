@@ -1,5 +1,6 @@
 package wspa.vehicle.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class Order {
     private LocalDateTime end;
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonManagedReference
     private User user;
     @ManyToOne
     @JoinColumn(name= "car_id")

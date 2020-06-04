@@ -68,7 +68,7 @@ public class UserEndpoint {
         return userService.getCars(id);
     }
 
-    @GetMapping(value = "/{id}/roles", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}/roles")
     public ResponseEntity<Optional<UserRole>> getUserRole(@PathVariable Long id)
     {
         return ResponseEntity.ok(userService.getAdminRole(id));

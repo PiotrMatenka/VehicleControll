@@ -42,7 +42,7 @@ public class UserService {
 
     public List<UserDto> findByLastName (String text)
     {
-        return userRepository.findByLastNameContainingIgnoreCase(text)
+        return userRepository.findByLastName(text)
                 .stream()
                 .map(userMapper::userDto)
                 .collect(Collectors.toList());
@@ -97,7 +97,8 @@ public class UserService {
         if (!user.isPresent())
             throw new UserNotFoundException();
         else
-            return carRepository.findAllByUser_Id(id).stream().map(carMapper::carDto).collect(Collectors.toSet());
+            return carRepository.findAllByUser_Id(id).stream()
+                    .map(carMapper::carDto).collect(Collectors.toSet());
     }
 
     public Optional<UserRole> getAdminRole(Long id)

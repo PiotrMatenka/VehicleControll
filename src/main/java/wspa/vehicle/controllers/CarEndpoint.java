@@ -47,7 +47,7 @@ public class CarEndpoint {
     }
 
     @PreAuthorize("hasAuthority('USER')")
-    @PostMapping(value = "")
+    @PostMapping("")
     public ResponseEntity<CarDto> saveCar (@RequestBody CarDto car, BindingResult result)
     {
         if (car.getId() != null )
