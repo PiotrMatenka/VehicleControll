@@ -1,11 +1,7 @@
 package wspa.vehicle.model.dto;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
+@Data
 public class CarDto {
     private Long id;
     private String producer;

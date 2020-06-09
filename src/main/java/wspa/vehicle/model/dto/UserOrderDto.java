@@ -7,8 +7,6 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Data
-@Getter
-@Setter
 public class UserOrderDto {
     private Long id;
     private LocalDateTime start;

@@ -9,8 +9,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@Getter
-@Setter
 public class UserDto {
     private Long id;
     private String firstName;

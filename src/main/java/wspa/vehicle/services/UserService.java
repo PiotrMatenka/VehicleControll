@@ -15,6 +15,7 @@ import wspa.vehicle.repositories.CarRepository;
 import wspa.vehicle.repositories.UserRepository;
 import wspa.vehicle.repositories.UserRoleRepository;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -103,11 +104,9 @@ public class UserService {
 
     public Optional<UserRole> getAdminRole(Long id)
     {
-      Set<UserRole> userRoles = userRepository.findById(id)
+      Set<UserRole> userRoles = new HashSet<>(userRepository.findById(id)
               .map(User::getRoles)
-              .orElseThrow(UserNotFoundException::new)
-              .stream()
-              .collect(Collectors.toSet());
+              .orElseThrow(UserNotFoundException::new));
       UserRole userRole = new UserRole();
       for (UserRole r:userRoles)
           if (r.getRole().equals("ADMIN"))

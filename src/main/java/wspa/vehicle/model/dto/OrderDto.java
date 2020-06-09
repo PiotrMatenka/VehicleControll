@@ -6,8 +6,6 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 @Data
-@Getter
-@Setter
 public class OrderDto {
     private Long id;
     private String description;

@@ -2,17 +2,11 @@ package wspa.vehicle.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.mapping.ToOne;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Getter
-@Setter
 @Table(name = "commission")
 public class Order {
     @Id
